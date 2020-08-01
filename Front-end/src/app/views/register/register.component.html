@@ -1,0 +1,77 @@
+<div class="animated fadeIn">
+  <div [ngClass]="{'disable': isBusy}">
+    <div class="row align-items-center " style="background-color:  #EEEEEE;">
+      <div class="col-md-6">
+        <div class="col-12 text-center">
+          <h5>ĐĂNG KÍ TÀI KHOẢN MỚI</h5>
+        </div>
+        <form [formGroup]="registerForm" class="row " style="justify-content: center;height: 100%;">
+          <div class="form-group col-8">
+            <label for="firstName"><strong>Họ<span class="text-danger">(*)</span></strong></label>
+            <input type="text" class="form-control rounded-pill " id="firstName" style="height: 40px;"
+              formControlName="firstName" [(ngModel)]="newUser.firstName" required>
+          </div>
+
+          <div class="form-group col-8">
+            <label for="lastName"><strong>Tên<span class="text-danger">(*)</span></strong></label>
+            <input type="text" class="form-control rounded-pill " id="lastName" style="height: 40px;"
+              formControlName="lastName" [(ngModel)]="newUser.lastName" required>
+          </div>
+
+          <div class=" col-8">
+            <label for="dob"><strong>Ngày sinh<span class="text-danger">(*)</span></strong></label>
+            <p-calendar NAME="dob" [monthNavigator]="true" [yearNavigator]="true" yearRange="1950:2020"
+              formControlName="dob" [ngClass]="'calendar'">
+            </p-calendar>
+          </div>
+
+          <div class="form-group col-8 mt-2">
+            <label for="email"><strong>Email<span class="text-danger">(*)</span></strong></label>
+            <input type="text" class="form-control rounded-pill " id="email" style="height: 40px;"
+              formControlName="email" [(ngModel)]="newUser.email" required>
+          </div>
+
+          <div class="form-group col-8">
+            <label for="phoneNumber"><strong>Số điện thoại<span class="text-danger">(*)</span></strong></label>
+            <input type="text" class="form-control rounded-pill " id="phoneNumber" style="height: 40px;"
+              formControlName="phoneNumber" [(ngModel)]="newUser.phoneNumber" required>
+          </div>
+
+          <div class="form-group col-8">
+            <label for="userName"><strong>Tên đăng nhập<span class="text-danger">(*)</span></strong></label>
+            <input type="text" class="form-control rounded-pill " id="userName" style="height: 40px;"
+              formControlName="userName" [(ngModel)]="newUser.userName" required>
+          </div>
+
+          <div class="form-group col-8 ">
+            <label for="password"><strong>Mật khẩu<span class="text-danger">(*)</span></strong></label>
+            <input type="password" class="form-control rounded-pill " id="password" style="height: 40px;"
+              formControlName="password" [(ngModel)]="newUser.password" required>
+          </div>
+
+          <div class="form-group col-8 ">
+            <label for="confirmPassword"><strong>Xác nhận mật khẩu<span class="text-danger">(*)</span></strong></label>
+            <input type="password" class="form-control rounded-pill " id="confirmPassword" style="height: 4 0px;"
+              formControlName="confirmPassword" [(ngModel)]="newUser.confirmPassword" required>
+          </div>
+
+          <div class="col-6 text-center">
+            <button type="button" class="btn btn-primary rounded-pill" style="height: 50px;width: 150px;"
+              [disabled]="!registerForm.valid" (click)="register()">Đăng kí</button>
+          </div>
+          <div class="col-6 text-center">
+            <button type="button" class="btn btn-primary rounded-pill" style="height: 50px;width: 150px;"
+              (click)="login()">Đăng nhập</button>
+          </div>
+
+        </form>
+      </div>
+      <div class="col-md-6 ">
+        <img src="assets/img/avatar.webp" width="100%">
+      </div>
+    </div>
+    <div *ngIf="isBusy" class="screen-center">
+      <app-spinner></app-spinner>
+  </div>
+  </div>
+</div>

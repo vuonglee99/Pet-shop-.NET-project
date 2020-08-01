@@ -1,0 +1,111 @@
+<div class="animated fadeIn" style="margin-bottom: 50%;">
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;left:50px;position: relative;">
+        <app-top-menu></app-top-menu>
+        <div class="row mt-5" style="position: absolute;width: 100%;">
+            <div class="col-12">
+                <span>
+                    <!-- <img src="assets/img/go_shopping.png" alt="go_shopping" width="8%"> -->
+                    <h5 style="display: inherit;">Các đơn hàng hiện tại</h5>
+                </span>
+                
+                <div class="row card mt-3">
+                    <div class="col-12">
+                        <div class="row mt-2">
+                            <div class="col-2 text-center">
+                                <strong>Mã đơn hàng</strong>
+                            </div>
+                            <div class="col-2 text-center">
+                                <strong>Ngày mua</strong>
+                            </div>
+
+                            <div class="col-3 text-center">
+                                <strong>Tổng tiền</strong>
+                            </div>
+                            <div class="col-3 text-center">
+                                <strong>Trạng thái</strong>
+                            </div>
+                            <div class="col-2">
+
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col-12 " *ngFor="let order of currentOrderList" >
+                        <div class="row mt-2 mb-2" >
+                            <div class="col-2 text-center" style="color:#007ad9 ;">
+                                {{order.id}}
+                            </div>
+                            <div class="col-2 text-center">
+                                {{order.orderDate}}
+                            </div>
+
+                            <div class="col-3 text-center title-font">
+                                {{order.total}}đ
+                            </div>
+                            <div class="col-3 text-center" style="color:#007ad9 ;">
+                                {{order.status}}
+                            </div>
+                            <div class="col-2 text-center routerLink" (click)="redirectTo('/home/order/',order.id)">
+                                Xem chi tiết <span class="icon-circle-right" style="vertical-align: middle;cursor: pointer;"></span>
+                            </div>
+                            
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <h5>Các đơn hàng cũ</h5>
+                <div class="row card">
+                    <div class="col-12">
+                        <div class="row mt-2">
+                            <div class="col-2 text-center">
+                                <strong>Mã đơn hàng</strong>
+                            </div>
+                            <div class="col-2 text-center">
+                                <strong>Ngày mua</strong>
+                            </div>
+
+                            <div class="col-3 text-center">
+                                <strong>Tổng tiền</strong>
+                            </div>
+                            <div class="col-3 text-center">
+                                <strong>Trạng thái</strong>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="col-12" *ngFor="let order of oldOrderList" >
+                        <div class="row " >
+                            <div class="col-2 text-center" style="color:#007ad9 ;">
+                                {{order.id}}
+                            </div>
+                            <div class="col-2 text-center">
+                                {{order.orderDate}}
+                            </div>
+
+                            <div class="col-3 text-center title-font">
+                                {{order.total}}đ
+                            </div>
+                            <div class="col-3 text-center" style="color:#007ad9 ;">
+                                {{order.status}}
+                            </div>
+                            <div class="col-2 text-center routerLink" (click)="redirectTo('/home/order/',order.id)">
+                                Xem chi tiết <span class="icon-circle-right" style="vertical-align: middle;cursor: pointer;"></span>
+                            </div>
+                            
+                        </div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div *ngIf="isBusy" class="screen-center">
+            <app-spinner></app-spinner>
+        </div>
+    </div>
+</div>

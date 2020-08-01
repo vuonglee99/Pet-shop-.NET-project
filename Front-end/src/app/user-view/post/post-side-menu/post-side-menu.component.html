@@ -1,0 +1,44 @@
+<div style="position: fixed;z-index: 0;width: 60%;" class="col-3">
+    <div class="text-center">
+        <img src="{{currentUser.avartar}}" alt="avatar" style="border-radius: 50%;" width="30%">
+        <br>
+        <span style="font-weight: 500;">{{currentUser.userName}}</span>
+    </div>
+    <ul class="side-menu" >
+        <li [ngClass]="{'side-menu-active': active=='Bảng tin'}" (click)="redirectTo('/post/','')">
+            <span class="icon-feedback1 " style="font-size: x-large;vertical-align: middle;"><span
+                    class="path1"></span><span class="path2"></span><span class="path3"></span><span
+                    class="path4"></span><span class="path5"></span><span class="path6"></span><span
+                    class="path7"></span><span class="path8"></span><span class="path9"></span><span
+                    class="path10"></span><span class="path11"></span><span class="path12"></span></span>
+            <span class="ml-3">Bảng tin</span>
+        </li>
+        <li [ngClass]="{'side-menu-active': active=='Bài đăng của tôi'}" (click)="redirectTo('/post/my-post','')">
+            <span class="icon-profile"
+                style="font-size: x-large;vertical-align: middle;color: #0091EA"></span>
+            <span class="ml-3">Bài đăng của tôi</span>
+        </li>
+        <li [ngClass]="{'side-menu-active': active=='Đăng bài'}" (click)="redirectTo('/post/add','')">
+            <span class="icon-edit-11" style="font-size: x-large;vertical-align: middle;"><span
+                    class="path1"></span><span class="path2"></span><span class="path3"></span><span
+                    class="path4"></span><span class="path5"></span><span class="path6"></span><span
+                    class="path7"></span><span class="path8"></span><span class="path9"></span><span
+                    class="path10"></span><span class="path11"></span><span class="path12"></span></span>
+            <span class="ml-3">Đăng bài</span>
+        </li>
+        <li [ngClass]="{'side-menu-active': active=='Tin tức'}" (click)="redirectTo('/post/news/','')">
+            <span class="icon-megaphone1" style="font-size: x-large;vertical-align: middle;"><span class="path1"></span><span class="path2"></span><span
+                    class="path3"></span><span class="path4"></span><span class="path5"></span><span
+                    class="path6"></span><span class="path7"></span><span class="path8"></span></span>
+            <span class="ml-3">Tin tức</span>
+        </li>
+        <li [ngClass]="{'side-menu-active': active=='Giải trí'}">
+            <span class="icon-tv" style="font-size: x-large;vertical-align: middle;color: #0091EA"></span>
+            <span class="ml-3">Giải trí</span>
+        </li>
+        <li [ngClass]="{'side-menu-active': active=='Cài đặt tài khoản'}" (click)="redirectTo('/post/account','')">
+            <span class="icon-cogs" style="font-size: x-large;vertical-align: middle;color: #0091EA"></span>
+            <span class="ml-3">Cài đặt tài khoản</span>
+        </li>
+    </ul>
+</div>

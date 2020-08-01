@@ -1,0 +1,112 @@
+<div class="animated fadeIn" style="margin-bottom: 50%;">
+
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;left:50px;position: relative;">
+        <app-top-menu></app-top-menu>
+        <div class="row mt-5" style="position: absolute;">
+            <div class="col-1">
+                <img src="assets/img/shopping.png" alt="Pet go shopping" width="100%">
+            </div>
+            <div class="col-8 txt_pink" style="margin-top: 2em;">
+                <h5>Tổng cộng {{totalProducts}} sản phẩm </h5>
+            </div>
+            <div class="col-8 card">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <strong>Tên sản phẩm</strong>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <strong>Số lượng</strong>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <strong>Giá</strong>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <strong>Tổng cộng</strong>
+                    </div>
+                    <div class="col-1 text-center"></div>
+                </div>
+                <hr>
+                <div *ngFor="let product of productsInCart">
+                    <div class="row mb-5 align-items-center">
+                        <div class="col-md-2">
+                            <img src="{{product.imageURL}}" alt="Ảnh-của-sản-phẩm" width="100%" (click)="redirectTo('/home/product/detail/',product.productId)">
+                        </div>
+                        <div class="col-md-3 text-center">
+                            {{product.productName}}
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <div class="btn-group mb-3">
+                                <button class="btn btn-danger rounded h-25 w-25" (click)="updateCart(product,-1)"><i class="pi pi-minus" style="font-size: medium;"></i></button>
+                                <p class="ml-3 mr-3 mt-2 mb-2">{{product.quantity}}</p>
+                                <button class="btn btn-danger rounded h-25 w-25" (click)="updateCart(product,1)"><i class="pi pi-plus" style="font-size: medium;"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-center title-font" >
+                            {{product.price}}đ
+                        </div>
+                        <div class="col-md-2 text-center title-font">
+                            {{product.total}}đ
+                        </div>
+                        <div class="col-1 text-center">
+                            <i class="pi pi-times" style="border: 1px solid #ddd;"
+                                (click)="deleteProductFromCart(product)"></i>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="col-12 mt-3 text-center" *ngIf="isEmpty">
+                    <span>
+                        <img src="assets/sad_pet.png" width="10%">
+                        <h5 class="mt-3">Không tìm thấy bất kì sản phẩm nào!</h5>
+                        <button type="button" class=" btn  rounded-pill " style="background-color: #EC407A;" (click)="redirectTo('/home/','')"><span
+                                class="icon-shopping-cart-3" style="font-size: x-large;"><span class="path1"></span><span class="path2"></span><span
+                                    class="path3"></span><span class="path4"></span><span class="path5"></span><span
+                                    class="path6"></span><span class="path7"></span><span class="path8"></span><span
+                                    class="path9"></span><span class="path10"></span><span class="path11"></span><span
+                                    class="path12"></span><span class="path13"></span><span class="path14"></span><span
+                                    class="path15"></span><span class="path16"></span><span class="path17"></span><span
+                                    class="path18"></span><span class="path19"></span></span>&nbsp;Tiếp tục mua sắm</button>
+                    </span>
+
+                </div>
+            </div>
+
+            <div class="col-3 ml-1">
+                <div class="row">
+                    <div class="col-12 card">
+                        <div style="display: flex;justify-content: space-between;margin-top: 1em;">
+                            <span>Tạm tính</span>
+                            <span> {{totalCartTmp}}đ </span>
+                        </div>
+                        <div style="display: flex;justify-content: space-between;margin-top: 1em;">
+                            <span>Phí vận chuyển</span>
+                            <span> 20000đ </span>
+                        </div>
+                        <hr>
+                        <div style="display: flex;justify-content: space-between;margin-top: 2em;">
+                            <span>Thành tiền</span>
+                            <span>
+                                <h5 style="color: red;">{{finalTotal}}đ</h5>
+                            </span>
+                        </div>
+                        <div class="txt_pink text-right">
+                            (Đã bao gồm VAT)
+                        </div>
+                    </div>
+                    <div class="col-12 text-center mt-3">
+                        <button class="btn rounded-pill" [disabled]="totalProducts == 0" style="background-color: #EC407A;"
+                        (click)="redirectTo('/home/checkout/','')">Tiến hành đặt hàng</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div *ngIf="isBusy" class="screen-center" >
+        <app-spinner></app-spinner>
+    </div>
+</div>

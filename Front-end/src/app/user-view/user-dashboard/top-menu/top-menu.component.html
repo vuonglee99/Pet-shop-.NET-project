@@ -1,0 +1,20 @@
+<div class="row align-items-center topbar" >
+    <div class="menu-topbar " on-mouseover="onOver(i)" *ngFor="let cate of rootCateList;let i = index" >
+        <span (click)="redirectTo('/home/product/',cate.id)" 
+        >SHOP CHO {{cate.name}} <span class="icon-circle-down"></span></span>
+    </div>
+    <div class=" menu-topbar  " on-mouseover="isDisplay=false">
+        <span>TIN TỨC </span>
+    </div>
+    <div class=" menu-topbar " on-mouseover="isDisplay=false" >
+        <span>LIÊN HỆ </span>
+    </div>
+</div>
+<div class="row menu-item item" *ngIf="isDisplay" on-mouseleave="onleave()" mousemove="isDisplay=true" 
+>
+    <ul *ngFor="let cate of mainCateList"  class=" col-3 text-left mt-3 ml-5 mr-5 " >
+        <li>
+            <a (click)="searchProduct(cate.id)">{{cate.name}}</a>
+        </li> 
+    </ul>
+</div>

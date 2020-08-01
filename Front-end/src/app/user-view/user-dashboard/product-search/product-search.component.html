@@ -1,0 +1,95 @@
+<div class="animated fadeIn ml-1 mr-2" style="margin-bottom: 100%;">
+
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;left:50px;position: relative;">
+
+        <div class="row align-items-center topbar">
+            <div class="menu-topbar " on-mouseover="onOver(i)" *ngFor="let cate of rootCateList;let i = index">
+                <span (click)="redirectTo('/home/product/',cate.id)">SHOP CHO {{cate.name}} <span
+                        class="icon-circle-down"></span></span>
+            </div>
+            <div class=" menu-topbar  " on-mouseover="isDisplay=false">
+                <span>TIN TỨC </span>
+            </div>
+            <div class=" menu-topbar " on-mouseover="isDisplay=false">
+                <span>LIÊN HỆ </span>
+            </div>
+        </div>
+        <div class="row menu-item item" *ngIf="isDisplay" on-mouseleave="onleave()" mousemove="isDisplay=true">
+            <ul *ngFor="let cate of mainCateList" class=" col-3 text-left mt-3 ml-5 mr-5 ">
+                <li>
+                    <a (click)="redirectTo('/home/product/',cate.id)" class="routerLink">{{cate.name}}</a>
+                </li>
+
+            </ul>
+        </div>
+
+        <div class="col-12 mt-5" style="position: absolute;">
+            <div class="row">
+                <div class="col-2 text-left">
+                    <div class="row align-items-center" style="background-color: #EEEEEE;">
+                        <div class="col-12">
+                            <div class="row item">
+                                <div class=" col-12 text-center mb-2"
+                                    style="background-color: #D81B60;color: white;font-size: 18px;min-height: 50px;">
+                                    {{name}}
+                                </div>
+
+
+                                <ul *ngFor="let cate of cateRelativeList" class="col-12" style="list-style: none;">
+                                    <li>
+                                        <a (click)="redirectTo('/home/product/',cate.id)" class="routerLink"
+                                            [ngClass]="{'active-item': currentCate.name == cate.name}">{{cate.name}}</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-10" *ngIf="currentCate">
+                    <div class="row">
+                        <div class="col-12">
+                            <tabset>
+                                <tab (click)="sortProduct()">
+                                    <ng-template tabHeading><i class="icon-list"></i> Tất cả &nbsp;<span
+                                            class="badge badge-success">New</span></ng-template>
+                                    <app-product-list [categoryId]="currentCate.id" [numProductOnRow]="'col-2'"
+                                        [rows]="18"></app-product-list>
+                                </tab>
+                                <tab (click)="sortProduct()">
+                                    <ng-template tabHeading><i class="icon-calculator"></i> Bán chạy &nbsp;<span
+                                            class="badge badge-pill badge-danger">29</span></ng-template>
+                                    <app-product-list [categoryId]="currentCate.id" [sortBy]="'viewCount'"
+                                        [numProductOnRow]="'col-2'" [rows]="18"></app-product-list>
+                                </tab>
+                                <tab (onClick)="sortProduct()">
+                                    <ng-template tabHeading><span class="icon-star-full"
+                                            style="color: #D81B60;font-size: larger;"></span> Nổi bật </ng-template>
+                                    <app-product-list [categoryId]="currentCate.id" [sortBy]="'star'"
+                                        [numProductOnRow]="'col-2'" [rows]="18"></app-product-list>
+                                </tab>
+                                <tab (onClick)="sortProduct()">
+                                    <ng-template tabHeading><span class="icon-star-full"
+                                            style="color: #D81B60;font-size: larger;"></span> Giá Cao-> thấp
+                                    </ng-template>
+                                    <app-product-list [categoryId]="currentCate.id" [sortBy]="'price'"
+                                        [numProductOnRow]="'col-2'" [rows]="18"></app-product-list>
+                                </tab>
+                                <tab (onClick)="sortProduct()">
+                                    <ng-template tabHeading><span class="icon-star-full"
+                                            style="color: #D81B60;font-size: larger;"></span> Giá Thấp->Cao
+                                    </ng-template>
+                                    <app-product-list [categoryId]="currentCate.id" [sortBy]="'price'"
+                                        [numProductOnRow]="'col-2'" [rows]="18" [isMinToMax]="true"></app-product-list>
+                                </tab>
+                            </tabset>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isBusy" class="screen-center">
+        <app-spinner></app-spinner>
+    </div>
+</div>

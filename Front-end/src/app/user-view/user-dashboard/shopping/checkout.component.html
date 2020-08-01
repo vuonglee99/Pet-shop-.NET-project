@@ -1,0 +1,191 @@
+<div class="animated fadeIn" style="margin-bottom: 50%;">
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;left:50px;position: relative;">
+        <app-top-menu></app-top-menu>
+        <div class="row mt-5" style="position: absolute;width: 100%;">
+            <div class="col-1" style="border-bottom: 1px solid #ddd;">
+                <img src="assets/img/shopping.png" alt="Pet go shopping" width="100%">
+            </div>
+            <div class="col-8 txt_pink" style="margin-top: 2em;border-bottom: 1px solid #ddd;">
+                <h5>Tổng cộng {{totalProducts}} loại sản phẩm </h5>
+            </div>
+            <div class="col-5 card mt-2">
+                <div class="row align-items-center">
+                    <div class="col-md-4 text-center">
+                        <strong>Sản phẩm</strong>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <strong>Số lượng</strong>
+                    </div>
+                    <div class="col-md-2 text-center">
+                        <strong>Giá</strong>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <strong>Tổng cộng</strong>
+                    </div>
+                    <div class="col-md-1 text-center">
+                        
+                    </div>
+                </div>
+                <hr>
+                <div *ngFor="let product of productsInCart">
+                    <div class="row mb-5 align-items-center">
+                        <div class="col-md-4 text-center">
+                            <img src="{{product.imageURL}}" alt="Ảnh-của-sản-phẩm" width="80%"
+                                (click)="redirectTo('/home/product/detail/',product.productId)">
+                            {{product.productName}}
+                        </div>
+                        <div class="col-md-2 text-center">
+                            {{product.quantity}}
+                        </div>
+                        <div class="col-md-2 text-center title-font">
+                            {{product.price}}đ
+                        </div>
+                        <div class="col-md-3 text-center title-font">
+                            {{product.total}}đ
+                        </div>
+                        <div class="col-1 text-center">
+                            <i class="pi pi-times" style="border: 1px solid #ddd;"
+                                (click)="deleteProductFromCart(product)"></i>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="row">
+                    <div class="col-6 mt-3">
+                        <p>Mã giảm giá/quà tặng</p>
+                        <div class="input-group mb-3 ">
+                            <input type="text" class="form-control" placeholder="nhập mã giảm giá" aria-label="Username"
+                                aria-describedby="basic-addon1">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1" style="background-color: #E91E63;"><i
+                                        class="pi pi-check"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div style="display: flex;justify-content: space-between;margin-top: 1em;">
+                            <span>Tạm tính</span>
+                            <span> {{totalCartTmp}}đ </span>
+                        </div>
+                        <div style="display: flex;justify-content: space-between;margin-top: 1em;">
+                            <span>Phí vận chuyển</span>
+                            <span> 20000đ </span>
+                        </div>
+                        <hr>
+                        <div style="display: flex;justify-content: space-between;margin-top: 2em;">
+                            <span>Thành tiền</span>
+                            <span>
+                                <h5 style="color: red;">{{finalTotal}}đ</h5>
+                            </span>
+                        </div>
+                        <div class="txt_pink text-right">
+                            (Đã bao gồm VAT)
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 ml-auto card mt-2" style="max-height:600px">
+                <div class="row">
+                    <div class="col-6">
+                        <strong>Thông tin khách hàng</strong>
+                        <form [formGroup]="newOrderForm">
+                            <div class="row">
+                                <div class="col-12 form-group">
+                                    <label for="shipName">Họ tên</label>
+                                    <input id="shipName" type="text" class="form-control"
+                                        [(ngModel)]="newOrderInput.shipName" formControlName="shipName" required>
+                                </div>
+                                <div class="col-12 form-group"
+                                    *ngIf="newOrderForm.controls['shipName'].errors && newOrderForm.controls['shipName'].dirty">
+                                    <p-message severity="error" text="Không được bỏ trống tên."
+                                        *ngIf="newOrderForm.controls['shipName'].errors['required']"></p-message>
+                                    <p-message severity="error" text="Tối thiểu 5 kí tự."
+                                        *ngIf="newOrderForm.controls['shipName'].errors['minlength'] "></p-message>
+                                    <p-message severity="error" text="Tối đa 50 kí tự."
+                                        *ngIf="newOrderForm.controls['shipName'].errors['maxlength'] "></p-message>
+                                </div>
+
+
+                                <div class="col-12 form-group">
+                                    <label for="shipEmail">Địa chỉ email</label>
+                                    <input id="shipEmail" type="email" class="form-control"
+                                        [(ngModel)]="newOrderInput.shipEmail" formControlName="shipEmail" required>
+                                </div>
+                                <div class="col-12 form-group"
+                                    *ngIf="newOrderForm.controls['shipEmail'].errors && newOrderForm.controls['shipEmail'].dirty">
+                                    <p-message severity="error" text="Không được bỏ trống email."
+                                        *ngIf="newOrderForm.controls['shipEmail'].errors['required']"></p-message>
+                                </div>
+
+                                <div class="col-12 form-group">
+                                    <label for="shipPhoneNumber">Số điện thoại</label>
+                                    <input id="shipPhoneNumber" type="number" class="form-control"
+                                        [(ngModel)]="phoneNumberInput" formControlName="shipPhoneNumber" required>
+                                </div>
+                                <div class="col-12 form-group"
+                                    *ngIf="newOrderForm.controls['shipPhoneNumber'].errors && newOrderForm.controls['shipPhoneNumber'].dirty">
+                                    <p-message severity="error" text="Không được bỏ trống số điện thoại."
+                                        *ngIf="newOrderForm.controls['shipPhoneNumber'].errors['required']"></p-message>
+                                </div>
+
+                                <div class="col-12 form-group">
+                                    <label for="shipAddress">Địa chỉ</label>
+                                    <textarea id="shipAddress" rows="2" class="form-control"
+                                        [(ngModel)]="newOrderInput.shipAddress" formControlName="shipAddress"
+                                        required></textarea>
+                                </div>
+                                <div class="col-12 form-group"
+                                    *ngIf="newOrderForm.controls['shipAddress'].errors && newOrderForm.controls['shipAddress'].dirty">
+                                    <p-message severity="error" text="Không được bỏ trống địa chỉ."
+                                        *ngIf="newOrderForm.controls['shipAddress'].errors['required']"></p-message>
+                                    <p-message severity="error" text="Tối thiểu 10 kí tự."
+                                        *ngIf="newOrderForm.controls['shipAddress'].errors['minlength'] "></p-message>
+                                    <p-message severity="error" text="Tối đa 200 kí tự."
+                                        *ngIf="newOrderForm.controls['shipAddress'].errors['maxlength'] "></p-message>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col-6 ">
+                        <div class="col-12 ">
+                            <strong>Hình thức vận chuyển</strong>
+                            <p>Giao hàng tận giường</p>
+                        </div>
+                        <div class="col-12">
+                            <p><strong>Hình thức thanh toán</strong></p>
+                            <div>
+                                <p-radioButton name="group1" value="Option 1" label="Thanh toán khi nhận hàng"
+                                    [(ngModel)]="payment" name="ORDER_PAYMENT"></p-radioButton>
+                            </div>
+
+                            <div class="mt-2">
+                                <p-radioButton name="group1" value="Option 1" label="Chuyển khoản" disabled="true"
+                                    pTooltip="Chưa hỗ trợ hình thức này" tooltipPosition="right">
+                                </p-radioButton>
+                            </div>
+
+                            <div class="mt-2">
+                                <p-radioButton name="group1" value="Option 1" label="Thanh toán bằng ví MoMo"
+                                    disabled="true" pTooltip="Chưa hỗ trợ hình thức này" tooltipPosition="right">
+                                </p-radioButton>
+                            </div>
+                        </div>
+                        <div class="col-12 form-group mt-2">
+                            <label for="note"><strong>Ghi chú</strong> </label>
+                            <textarea id="note" rows="2" class="form-control"></textarea>
+                        </div>
+                        <div class="col-12 mt-2 text-center">
+                            <button class="btn btn-danger rounded-pill" [disabled]="!newOrderForm.valid"
+                                (click)="createNewOrder()">Hoàn tất đặt
+                                hàng</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isBusy" class="screen-center">
+            <app-spinner></app-spinner>
+        </div>
+    </div>
+</div>

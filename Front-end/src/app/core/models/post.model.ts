@@ -1,0 +1,33 @@
+export class Post{
+    POST_ID:string;
+    POST_PRODUCT_NAME:string;
+    POST_PRODUCT_TYPE:string;
+    POST_TITLE:string;
+    POST_META_CONTENT:string;
+    POST_CONTENT:string;
+    POST_AVATAR:string;
+    POST_IMAGE1:string;
+    POST_IMAGE2:string;
+    POST_IMAGE3:string;
+    POST_DATE:string;
+    POST_USER_ID:string;
+    POST_LIKE:string;
+    POST_STATUS:string;
+
+    constructor(){
+        this.POST_ID=null;
+        this.POST_PRODUCT_NAME=null;
+        this.POST_PRODUCT_TYPE=null;
+        this.POST_TITLE=null;
+        this.POST_META_CONTENT=null;
+        this.POST_CONTENT=null;
+        this.POST_AVATAR=null;
+        this.POST_IMAGE1=null;
+        this.POST_IMAGE2=null;
+        this.POST_IMAGE3=null;
+        this.POST_DATE=null;
+        this.POST_USER_ID=null;
+        this.POST_LIKE="0";
+        this.POST_STATUS="0";
+    }
+}

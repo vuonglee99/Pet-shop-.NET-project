@@ -1,0 +1,52 @@
+<div class="animated fadeIn" >
+
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;">
+        <div class="row mt-3">
+                <app-post-side-menu [active]="''"></app-post-side-menu>
+            <div class="col-6 ml-auto" *ngIf="currentNews">
+                <div class="row card p-3">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-2">
+                                <img src="assets/img/user-icon.png" alt="Ảnh đại diện" width="100%" style="border-radius: 50%;">
+                            </div>
+                            <div class="col-10 text-left">
+                                <span style="font-size: larger;">Admin</span>
+                                <p class="txt_pink">{{currentNews.dateCreated}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 mt-2">
+                        {{currentNews.tittle}}
+                    </div>
+                    <div class="col-12 mt-3 ">
+                        <img src="{{currentNews.imageURL}}" alt="Ảnh-bài-đăng" width="100%" class="image">
+                    </div>
+                    <div class="col-12 mt-3 pt-4" style="border-top:1px solid #E0E0E0;">
+                        <p-fieldset legend="Nội dung chi tiết" [toggleable]="true">
+                            <div [innerHTML]="currentNews.content"></div>
+                        </p-fieldset>
+                    </div>
+                    <div class="col-12 form-group mt-2 pt-2" style="border-top:1px solid #E0E0E0;" >
+                        <input type="text" placeholder="Viết bình luận" class="form-control rounded-pill" (keydown)="addComment($event)"
+                        [(ngModel)]="commentContent">
+                    </div>
+                    <div class="col-12 mt-3 text-center">
+                        <span>
+                            <img src="assets/sad_pet.png" width="20%">
+                            <p class="mt-3" style="font-weight: 500;">Hãy là người đầu tiên bình luận về nội dung này!</p>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 card " >
+                <app-product-list [numProductOnRow]="'col-6'" [rows]="8" [isPaging]="false"></app-product-list> 
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isBusy" class="screen-center">
+        <app-spinner></app-spinner>
+    </div>
+</div>

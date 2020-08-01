@@ -1,0 +1,202 @@
+<div class="animated fadeIn">
+    <div [ngClass]="{'disable': isBusy}">
+
+        <div class="toolbar">
+            <ul class="text-dark" style="font-family: auto;font-size: 18px;padding-left:10px;margin:0;">
+                <li class="menu-toolbar" style="display: inline-block;padding:15px;padding-left: 20px;cursor: pointer;"
+                    (click)="checkEdit()" *ngIf="!isEditOrder">
+                    <i class="cui-brush icons font-2xl " style="vertical-align: middle;"></i> Cập nhật</li>
+                    <li class="menu-toolbar" style="display: inline-block;padding:15px;padding-left: 20px;cursor: pointer;"
+                    (click)="updateOrder()" *ngIf="isEditOrder">
+                    <i class="pi pi-save " style="vertical-align: middle;"></i> Lưu</li>
+                    <li class="menu-toolbar" style="display: inline-block;padding:15px;padding-left: 20px;cursor: pointer;"
+                    (click)="isEditOrder=false" *ngIf="isEditOrder">
+                    <i class="pi pi-times " style="vertical-align: middle;"></i> Hủy</li>
+                <li class="menu-toolbar" style="display: inline-block;padding:15px;padding-left: 20px;cursor: pointer;"
+                    (click)="displayModal=true" *ngIf="!isEditOrder&&!isSuccess&&!isCancel">
+                    <i class="pi pi-times" style="vertical-align: bottom;"></i> Hủy đơn</li>
+            </ul>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12" *ngIf="order">
+                <div class="row ">
+                    <!-- <div class="p-col-9"></div> -->
+                    <div class="col-md-4">
+                        <strong>THÔNG TIN NGƯỜI NHẬN</strong>
+                        <div class="card bg-primary panel" style="padding: 1em;height: 180px;">
+                            Người nhận: {{order.shipName}}<br>
+                            Địa chỉ: {{order.shipAddress}}<br>
+                            Điện thoại:{{order.shipPhoneNumber}}<br>
+                            Email: {{order.shipEmail}}<br>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <strong>HÌNH THỨC GIAO HÀNG</strong>
+                        <div class="card bg-info panel" style="padding: 1em;height: 180px;">
+                            Giao hàng tiêu chuẩn 3-5 ngày sau khi đặt hàng.<br>
+                            Phí vận chuyển 20.000đ<br>
+                            Thanh toán khi nhận hàng.<br>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <strong>THÔNG TIN ĐƠN HÀNG</strong>
+                        <div class="card bg-success panel" style="padding: 1em;height: 180px;">
+                            Tổng cộng: {{totalProducts}} sản phẩm.<br>
+                            Trị giá đơn hàng: {{order.total}}đ<br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="mt-5 mb-2"><strong>TRẠNG THÁI ĐƠN HÀNG</strong></p>
+            <div class="card col-md-12" >
+                <div class="row" *ngIf="order">
+                    <div class="col-md-12 mt-3 ">
+                        <p-progressBar [value]="orderProcessing" [showValue]="false" [style]="{'height': '10px'}">
+                        </p-progressBar>
+                    </div>
+                    <div class="col-md-12 text-left mt-2 mb-2" *ngIf="!isEditOrder">
+                        <span style="color: #007ad9;">{{order.status}}</span>
+                    </div>
+                    <div class="col-md-4 text-left mt-3 mb-3" *ngIf="isEditOrder">
+                        <label for="cate"><strong>Trạng thái đơn hàng</strong></label>
+                            <p-dropdown [options]="typeItems" filter="true" 
+                                name="cate"  styleClass="form-control fix-dropdown" (onChange)="setOrderProcessing($event)"
+                                [(ngModel)]="orderInput.status" >
+                                <ng-template let-item pTemplate="selectedItem" >
+                                    <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                                </ng-template>
+                                <ng-template let-item pTemplate="item">
+                                    <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                        <div style="font-size:14px;float:left;margin-top:4px;">{{item.label}}</div>
+                                    </div>
+                                </ng-template>
+                            </p-dropdown>
+                    </div>
+                </div>
+            </div>
+
+            <p class="mt-5 mb-2"><strong>THÔNG TIN SẢN PHẨM</strong></p>
+            <div class="col-md-12 card ml-1 mr-1">
+                <div class="row">
+                    <div class="col-md-2">
+                    </div>
+                    <div class="col-md-4 text-left">
+                        Tên sản phẩm
+                    </div>
+                    <div class="col-md-2 text-left">
+                        Số lượng
+                    </div>
+                    <div class="col-md-2 text-left">
+                        Giá
+                    </div>
+                    <div class="col-md-2 text-left">
+                        Tổng cộng
+                    </div>
+                </div>
+                <hr>
+                <div *ngFor="let orderDetail of orderDetailList">
+                    <div class="row mb-5 align-items-center">
+
+
+                        <div class="col-md-2">
+                            <img src="{{orderDetail.imageURL}}" alt="Ảnh-của-sản-phẩm" width="100%">
+                        </div>
+                        <div class="col-md-4 text-left">
+                            {{orderDetail.productName}}
+                        </div>
+                        <div class="col-md-2 text-left">
+                            {{orderDetail.quantity}}
+                        </div>
+                        <div class="col-md-2 text-left">
+                            {{orderDetail.productPrice}}đ
+                        </div>
+                        <div class="col-md-2 text-left">
+                            {{orderDetail.sum}}đ
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="row" *ngIf="order">
+                    <div class="col-md-8"></div>
+                    <div class=" col-md-4 text-right"><span class="float-left"><strong>Tạm tính</strong></span>
+                        {{order.total}}đ
+                    </div>
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4 text-right"><span class="float-left"><strong>Phí vận chuyển</strong></span>
+                        20000đ
+                    </div>
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4 text-right text-danger"><span class="float-left text-dark"><strong>Tổng
+                                cộng</strong></span>
+                        {{orderFinalTotal}}đ</div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <p-dialog header="Lý do hủy đơn hàng" [(visible)]="displayModal" [modal]="true" [style]="{width: '40vw'}"
+        [baseZIndex]="10000" >
+        <form [formGroup]="notificationForm">
+            <div class="mt-3 row">
+
+                <div class="col-md-12">
+                    <h5>Thông báo lý do hủy đơn hàng đến người dùng!</h5>
+                </div>
+                <div class="col-md-12">
+                    <label for="tittle"><strong>Tiêu đề <span style="color: red;">(*)</span></strong></label>
+                    <textarea rows="1" id="tittle" class="form-control" name=" tittle"
+                        [(ngModel)]="notificationInput.tittle" formControlName="tittle" required></textarea>
+                </div>
+
+                <div class="col-md-12">
+                    <label for="tittle"><strong>Nội dung<span style="color: red;">(*)</span></strong></label>
+                    <textarea rows="2" id="message" class="form-control" name=" message"
+                        [(ngModel)]="notificationInput.message" formControlName="message" required></textarea>
+                </div>
+            </div>
+        </form>
+        <p-footer>
+            <button style="background-color: #d39e00;border-color: #c69500;" type="button" pButton icon="pi pi-check"
+                (click)="confirm()" label="Gửi" [disabled]="!notificationForm.valid"></button>
+            <button style="background-color: grey;border-color: grey;" type="button" pButton icon="fa fa-times"
+                (click)="displayModal=false" label="Hủy"></button>
+        </p-footer>
+    </p-dialog>
+
+    <p-dialog header="Lỗi" [(visible)]="displayModal2" [modal]="true" [style]="{width: '35vw'}" [baseZIndex]="10000">
+        <div style="text-align: center;">
+            <img src="assets/info.png" alt="Thông-tin" width="25%">
+            <h5>Đơn hàng đã bị hủy!</h5>
+        </div>
+        <p-footer>
+            <button stype="button" pButton icon="pi pi-check" (click)="displayModal2=false" label="OK"></button>
+        </p-footer>
+    </p-dialog>
+
+    <p-dialog header="Lỗi" [(visible)]="displayModal3" [modal]="true" [style]="{width: '35vw'}" [baseZIndex]="10000">
+        <div style="text-align: center;">
+            <img src="assets/info.png" alt="Thông-tin" width="25%">
+            <h5>Đơn hàng đã giao thành công!</h5>
+        </div>
+        <p-footer>
+            <button stype="button" pButton icon="pi pi-check" (click)="displayModal3=false" label="OK"></button>
+        </p-footer>
+    </p-dialog>
+
+    <p-confirmDialog #cd header="Thông báo xác nhận" icon="pi pi-exclamation-triangle" [style]="{width: '45vw'}">
+        <p-footer>
+            <button type="button" pButton icon=" fa fa-check" label="Xác nhận" (click)="cd.accept()"></button>
+            <button type="button" pButton icon="fa fa-times" label="Hủy bỏ" (click)="cd.reject()"
+                style="background-color:#6c757d;border-color: #6c757d;"></button>
+        </p-footer>
+    </p-confirmDialog>
+    <div *ngIf="isBusy">
+        <app-spinner></app-spinner>
+    </div>
+</div>

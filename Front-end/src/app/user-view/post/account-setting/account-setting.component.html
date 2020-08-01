@@ -1,0 +1,200 @@
+<div class="animated fadeIn">
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;">
+        <div class="row mt-3">
+            <app-post-side-menu [active]="'Cài đặt tài khoản'"></app-post-side-menu>
+            <div class="col-6 ml-auto mt-3">
+
+                <tabset>
+                    <tab>
+                        <ng-template tabHeading><span class="icon-info2"
+                                style="font-size: x-large;vertical-align: middle;color: #EC407A;"></span> &nbsp; Thông
+                            tin</ng-template>
+                        <div class="row mt-3 p-2">
+                            <div class="col-md-4">
+                                <img src="{{currentUser.avartar}}" alt="Ảnh-đại-diện" class="img-avatar">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span><strong>Tên đăng nhập:</strong> {{currentUser.userName}}</span>
+                                        <hr>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <span><strong>Họ:</strong> {{currentUser.firstName}}</span>
+                                        <span class="ml-5"><strong>Tên:</strong> {{currentUser.lastName}}</span>
+                                        <hr>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <span><strong>Ngày sinh:</strong> {{currentUser.dob}}</span>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span><strong>Số điện thoại:</strong> {{currentUser.phoneNumber}}</span>
+                                        <hr>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <span><strong>Địa chỉ email:</strong> {{currentUser.email}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-4 mt-5">
+                                
+                                <div class="card panel" style="padding: 1em;height: 150px;border: 2px solid #E91E63;">
+                                    <strong>Tổng đơn hàng</strong>
+                                    10
+                                </div>
+                            </div>
+    
+                            <div class="col-md-4 mt-5">
+                                <div class="card panel" style="padding: 1em;height: 150px;border: 2px solid #D500F9;">
+                                    <strong>Tổng bài đăng</strong>
+                                    5
+                                </div>
+                            </div>
+    
+                            <div class="col-md-4 wow bounce mt-5">
+                                
+                                <div class="card panel" style="padding: 1em;height: 150px;border: 2px solid #FF1744;">
+                                    <strong>Tổng điểm tích lũy</strong>
+                                    10
+                                </div>
+                            </div> -->
+                        </div>
+                    </tab>
+                    <tab>
+                        <ng-template tabHeading> <i class="fa fa-heart-o" aria-hidden="true"
+                                style="color: #EC407A;font-size: x-large;vertical-align: middle;">&nbsp;</i>Yêu thích
+                        </ng-template>
+                        <div class="row">
+                            <div class="col-12">
+                                <img
+                                    src="https://firebasestorage.googleapis.com/v0/b/petsshop-25bdd.appspot.com/o/favorite%2FCho_meo_1.jpg?alt=media&token=7d09fc8f-865e-43a1-b48f-c596cb9dd7f7"
+                                    width="50%">
+                            </div>
+                            <div class="col-12 mt-3">
+                                <p>Tôi rất thích động vật, đặc biệt là các loại chó mèo, tôi có nguyên bộ sưu tập về các loại chó mèo trên thế giới</p>
+                            </div>
+                        </div>
+                    </tab>
+                    <tab>
+                        <ng-template tabHeading><span class="icon-cogs"
+                                style="font-size: x-large;vertical-align: middle;color: #EC407A;"></span>&nbsp; Chỉnh
+                            sửa </ng-template>
+                        <div class="row">
+                            <div class="col-4 text-left">
+                                <img [src]="imgURL" alt="Ảnh-đại-diện"  class="img-avatar" *ngIf="imgURL">
+                                    <input #file type="file" accept='image/*' (change)="preview(file.files,i,routine)" class="ml-5" >
+                            </div>
+                            <div class="col-8">
+
+                            </div>
+                            <form [formGroup]="editUserForm" class="col-6 mt-3">
+                                <div class="row">
+                                    <div class=" form-group col-md-12 ">
+                                        <label for="firstName"><strong>Họ<span
+                                                    style="color: red;">(*)</span></strong></label>
+                                        <input rows="3" id="firstName" class="form-control" name=" firstName"
+                                            [(ngModel)]="editUser.firstName" formControlName="firstName" required>
+                                    </div>
+                                    <div class=" form-group col-md-12 "
+                                        *ngIf="editUserForm.controls['firstName'].errors && editUserForm.controls['firstName'].dirty">
+                                        <p-message severity="error" text="Không được bỏ trống họ."
+                                            *ngIf="editUserForm.controls['firstName'].errors['required']"></p-message>
+                                        <p-message severity="error" text="Yêu cầu tối thiểu 2 kí tự."
+                                            *ngIf="editUserForm.controls['firstName'].errors['minlength']"></p-message>
+                                        <p-message severity="error" text="Yêu cầu tối đa 50 kí tự."
+                                            *ngIf="editUserForm.controls['firstName'].errors['maxlength']"></p-message>
+                                    </div>
+
+                                    <div class=" form-group col-md-12 ">
+                                        <label for="userName"><strong>Tên đăng nhập<span
+                                                    style="color: red;">(*)</span></strong></label>
+                                        <input rows="3" id="userName" class="form-control" name=" userName"
+                                            [(ngModel)]="editUser.userName" formControlName="userName" required>
+                                    </div>
+                                    <div class=" form-group col-md-12 "
+                                        *ngIf="editUserForm.controls['userName'].errors && editUserForm.controls['userName'].dirty">
+                                        <p-message severity="error" text="Không được bỏ trống tên đăng nhập."
+                                            *ngIf="editUserForm.controls['userName'].errors['required']"></p-message>
+                                        <p-message severity="error" text="Yêu cầu tối thiểu 6 kí tự."
+                                            *ngIf="editUserForm.controls['userName'].errors['minlength']"></p-message>
+                                        <p-message severity="error" text="Yêu cầu tối đa 50 kí tự."
+                                            *ngIf="editUserForm.controls['userName'].errors['maxlength']"></p-message>
+                                    </div>
+
+                                    <div class=" form-group col-md-12">
+                                        <label for="email"><strong>Email<span
+                                                    style="color: red;">(*)</span></strong></label>
+                                        <input rows="3" id="email" class="form-control" name=" email"
+                                            [(ngModel)]="editUser.email" formControlName="email" required>
+                                    </div>
+                                    <div class=" form-group col-md-12"
+                                        *ngIf="editUserForm.controls['email'].errors && editUserForm.controls['email'].dirty">
+                                        <p-message severity="error" text="Không được bỏ trống email."
+                                            *ngIf="editUserForm.controls['email'].errors['required']"></p-message>
+                                    </div>
+
+                                </div>
+                            </form>
+                            <form [formGroup]="editUserForm" class="col-6 mt-3">
+                                <div class="row">
+                                    <div class=" form-group col-md-12 ">
+                                        <label for="lastName"><strong>Tên<span
+                                                    style="color: red;">(*)</span></strong></label>
+                                        <input rows="3" id="lastName" class="form-control" name=" lastName"
+                                            [(ngModel)]="editUser.lastName" formControlName="lastName" required>
+                                    </div>
+                                    <div class=" form-group col-md-12 "
+                                        *ngIf="editUserForm.controls['lastName'].errors && editUserForm.controls['lastName'].dirty">
+                                        <p-message severity="error" text="Không được bỏ trống tên."
+                                            *ngIf="editUserForm.controls['lastName'].errors['required']"></p-message>
+                                        <p-message severity="error" text="Yêu cầu tối thiểu 2 kí tự."
+                                            *ngIf="editUserForm.controls['lastName'].errors['minlength']"></p-message>
+                                        <p-message severity="error" text="Yêu cầu tối đa 50 kí tự."
+                                            *ngIf="editUserForm.controls['lastName'].errors['maxlength']"></p-message>
+                                    </div>
+
+
+                                    <div class=" form-group col-md-12">
+                                        <label for="dobInput"><strong>Ngày sinh </strong></label>
+                                        <p-calendar NAME="dobInput" [monthNavigator]="true" [yearNavigator]="true"
+                                            yearRange="1950:2020" [(ngModel)]="dobInput" styleClass="form-control"
+                                            inputStyleClass="form-control" [ngModelOptions]="{standalone: true}">
+                                        </p-calendar>
+                                    </div>
+
+                                    <div class=" form-group col-md-12 ">
+                                        <label for="phoneNumber"><strong>Số điện thoại<span
+                                                    style="color: red;">(*)</span></strong></label>
+                                        <input rows="3" id="phoneNumber" class="form-control" name=" phoneNumber"
+                                            [(ngModel)]="editUser.phoneNumber" formControlName="phoneNumber" required>
+                                    </div>
+                                    <div class=" form-group col-md-12 "
+                                        *ngIf="editUserForm.controls['phoneNumber'].errors && editUserForm.controls['phoneNumber'].dirty">
+                                        <p-message severity="error" text="Không được bỏ trống số diện thoại."
+                                            *ngIf="editUserForm.controls['phoneNumber'].errors['required']"></p-message>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="col-12 text-left mt-3">
+                                <button type="button" class=" btn  rounded-pill " [disabled]="!editUserForm.valid"
+                                    style="background-color: #EC407A;" (click)="updateUser()"><span
+                                        class="icon-cloud-upload"
+                                        style="font-size: x-large;color: #7B1FA2;vertical-align: middle;"></span>&nbsp;Lưu
+                                    chỉnh sửa</button>
+                            </div>
+                        </div>
+                    </tab>
+                </tabset>
+            </div>
+            <div class="col-3 card mt-3">
+                <app-product-list [numProductOnRow]="'col-6'" [rows]="4" [isPaging]="true"></app-product-list>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="isBusy" class="screen-center">
+        <app-spinner></app-spinner>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="animated fadeIn">
+    <div [ngClass]="{'disable': isBusy}">
+
+        <div class="toolbar">
+            <ul class="text-dark" style="font-family: auto;font-size: 18px;padding-left:10px;margin:0;">
+                <li class="menu-toolbar" style="display: inline-block;padding:15px;padding-left: 20px;cursor: pointer;"
+                    (click)="getAllOrders()">
+                    <i class="fa fa-search"></i> Tìm kiếm</li>
+                <li class="menu-toolbar" style="display: inline-block;padding:15px;padding-left: 20px;cursor: pointer;">
+                    <i class="fa fa-trash"></i> Xóa</li>
+                <li class="menu-toolbar" style="display: inline-block;padding:15px;padding-left: 20px;cursor: pointer;"
+                    (click)="viewDetail()"> <i class="fa fa-eye"></i> Chi tiết</li>
+            </ul>
+        </div>
+
+        <div class="mt-3">
+            <p-card>
+                <div class="row ">
+                    <div class=" form-group col-md-4">
+                        <label for="name"><strong>Mã đơn hàng </strong></label>
+                        <input type="number" class="form-control" name=" name" [(ngModel)]="orderInput.id">
+                    </div>
+
+                    <div class=" form-group col-md-4">
+                        <label for="orderDate"><strong>Ngày đặt hàng </strong></label>
+                        <p-calendar NAME="orderDate" [monthNavigator]="true" [yearNavigator]="true"
+                            yearRange="1950:2020" [(ngModel)]="orderDateInput" styleClass="form-control"
+                            inputStyleClass="form-control">
+                        </p-calendar>
+                    </div>
+
+                    <div class=" form-group col-md-4">
+                        <label for="cate"><strong>Trạng thái đơn hàng</strong></label>
+                        <p-dropdown [options]="typeItems" filter="true" [(ngModel)]=" orderInput.status" name="cate"
+                         styleClass="form-control fix-dropdown">
+                            <ng-template let-item pTemplate="selectedItem">
+                                <span style="vertical-align:middle; margin-left: .5em">{{item.label}}</span>
+                            </ng-template>
+                            <ng-template let-item pTemplate="item">
+                                <div class="ui-helper-clearfix" style="position: relative;height: 25px;">
+                                    <div style="font-size:14px;float:left;margin-top:4px;">{{item.label}}</div>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                    </div>
+                </div>
+            </p-card>
+        </div>
+
+        <div class="mt-5">
+            <p-table #dt [columns]="cols" [value]="orderList" selectionMode="single" [ngClass]="'table'"
+                [paginator]="true" [rows]="10" (onRowSelect)=" onRowSelect ($event)" (sortFunction)="customSort($event)"
+                [customSort]="true">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th style="width:3em;">STT</th>
+                        <th *ngFor="let col of columns" [pSortableColumn]="col.field">
+                            {{col.header}}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-i="rowIndex">
+                    <tr [pSelectableRow]="rowData" style="text-align:center">
+                        <td>{{i+1}}</td>
+                        <td *ngFor="let col of columns">
+                            {{rowData[col.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <div *ngIf="isBusy">
+        <app-spinner></app-spinner>
+    </div>
+</div>

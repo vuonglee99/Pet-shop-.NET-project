@@ -1,0 +1,148 @@
+// Here you can add other styles
+ body .calendar .ui-inputtext  {
+  font-size: 14px;
+  color: #333333;
+  background: #ffffff;
+  padding: 0.429em;
+  border: 1px solid #a6a6a6;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+  width: 430px;
+  border-radius: 20px;
+  height: 40px;
+}
+
+body .ui-inputtext {
+  font-size: 14px;
+  color: #333333;
+  background: #ffffff;
+  padding: 0.429em;
+  border: 1px solid #a6a6a6;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 110%;
+}
+
+.ui-dropdown .ui-dropdown-trigger {
+  border-right: 0;
+  border-top: 0;
+  border-bottom: 1px solid;
+  cursor: pointer;
+  height: 110.5%;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.disable{
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.toolbar{
+  background-color:  #03A9F4;
+  height: 60px;
+  margin-left: -40px;
+  margin-right: -40px;
+}
+.menu-toolbar:hover{
+  opacity: 0.5;
+}
+
+.menu-toolbar:active{
+  background-color: gainsboro;
+}
+
+body .ui-paginator {
+  background-color: transparent;
+  padding: 0;
+  border: none;
+  float: right;
+}
+
+.ui-table .ui-paginator-bottom {
+  border-top: 0 none;
+  float: right;
+}
+
+body .ui-paginator .ui-paginator-pages .ui-paginator-page.ui-state-active {
+  background-color: #007ad9;
+  color: #ffffff;
+  border-radius: 20px;
+}
+
+body .ui-table .ui-table-thead > tr > th {
+  padding: 0.571em 0.857em;
+  border: 1px solid #c8c8c8;
+  font-weight: 700;
+  color: #333333;
+  background-color: #639BB7;
+  text-align: center;
+  height: 50px;
+  vertical-align: middle;
+}
+
+.table .ui-table table{
+  border-collapse: collapse;
+  width: 100%;
+  table-layout: fixed;
+}
+
+body .fixheight-upload .ui-fileupload .ui-fileupload-content {
+  background-color: #ffffff;
+  padding: 0.571em 1em;
+  border: 1px solid #c8c8c8;
+  color: #333333;
+  height:140px;
+}
+
+.fix-card{
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #333333;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
+.ui-inputtext{ 
+  margin:-7px -12px; 
+ }
+
+.ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default{ 
+top:0px;
+right: -1px; 
+}
+
+.ui-calendar button{ 
+  width: 2.5em; 
+}
+
+body  .ui-dropdown .ui-dropdown-label {
+  padding-right: 2em;
+  border: 1px solid  #848484;
+}
+
+.notification-message {
+  min-height: 25px;
+  width: 200px;
+  padding: 5px;
+}
+
+.panel:hover{
+  //opacity: 0.7;
+  -webkit-box-shadow:0 10px 15px -6px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow:0 10px 15px -6px rgba(0, 0, 0, 0.5);
+  box-shadow:0 0 15px rgba(0, 0, 0, 0.5);
+  //box-shadow: 0 8.6px 8px rgba(0, 0, 0, 0.065), 0 11px 20px rgba(0, 0, 0, 0.13);
+}
+
+.list-info{
+  list-style: none;
+  line-height: 2.5em;
+  margin-left: 2em;
+}
+
+.list-info li{
+  line-height: 3em;
+}
+

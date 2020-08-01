@@ -1,0 +1,20 @@
+<div class="animated fadeIn" style="margin-bottom: 20%;">
+
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;">
+        <div class="row mt-3">
+           
+                <app-post-side-menu [active]="'Bảng tin'"></app-post-side-menu>
+
+            <div class="col-6 ml-auto">
+                <app-post-list></app-post-list>
+            </div>
+            <div class="col-3 card mt-3" >
+                <app-product-list [numProductOnRow]="'col-6'" [rows]="8" [isPaging]="false"></app-product-list> 
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="isBusy" class="screen-center">
+        <app-spinner></app-spinner>
+    </div>
+</div>

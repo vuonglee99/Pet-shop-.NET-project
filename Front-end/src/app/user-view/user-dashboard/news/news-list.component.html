@@ -1,0 +1,15 @@
+<div class="row ml-2 mr-2">
+    <div *ngFor="let news of newsList" class="col-3">
+        <div class="row">
+            <div class="col-12" style="height: 200px;">
+                <img src="{{news.imageURL}}" width="100%">
+            </div>
+            <div class="col-12 mt-2" style="height: 60px;">
+                {{news.tittle}}
+            </div>
+            <div class="col-12 text-left title-font" >
+                <span class="icon-alarm"></span> {{news.dateCreated}}
+            </div>
+        </div>
+    </div>
+</div>

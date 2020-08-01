@@ -1,0 +1,53 @@
+<div class="animated fadeIn">
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;">
+        <div class="row mt-3">
+            <app-post-side-menu [active]="'Đăng bài'"></app-post-side-menu>
+            <div class="col-6 ml-auto">
+                <div class="row">
+                    <div class="col-12">
+                        <label for="imageURL"><strong>Ảnh bài đăng<span style="color: red;">(*)</span></strong></label>
+                        <p-fileUpload name="imageURL" (onSelect)="onFileSelected($event)" multiple="false"
+                            accept="image/*" maxFileSize="5000000" fileLimit="1" [ngClass]="'upload'">
+                            <ng-template pTemplate="content">
+                            </ng-template>
+                        </p-fileUpload>
+                    </div>
+                    <form class="col-12 mt-3" [formGroup]="newPostForm">
+                        <div class="row">
+                            <div class=" form-group col-md-12 ">
+                                <label for="tittle"><strong>Tiêu đề<span style="color: red;">(*)</span></strong></label>
+                                <textarea rows="3" id="tittle" class="form-control" name=" tittle"
+                                    [(ngModel)]="newPostInput.tittle" formControlName="tittle" required></textarea>
+                            </div>
+                            <div class=" form-group col-md-12 "
+                                *ngIf="newPostForm.controls['tittle'].errors && newPostForm.controls['tittle'].dirty">
+                                <p-message severity="error" text="Không được bỏ trống tiêu đề."
+                                    *ngIf="newPostForm.controls['tittle'].errors['required']"></p-message>
+                                <p-message severity="error" text="Yêu cầu tối thiểu 10 kí tự."
+                                    *ngIf="newPostForm.controls['tittle'].errors['minlength']"></p-message>
+                            </div>
+                        </div>
+                    </form>
+
+                    <label class="col-md-12 mt-3"><strong>Nội dung<span style="color: red;">(*)</span></strong></label>
+                    <form class="col-md-12" [formGroup]="newPostForm">
+                        <p-editor [(ngModel)]="newPostInput.content" [style]="{'height':'400px'}" name="content"
+                            formControlName="content" (onInit)="editorInit($event)" required>
+                        </p-editor>
+                    </form>
+
+                    <div class="col-12 text-left mt-3" >
+                        <button type="button" class=" btn  rounded-pill " [disabled]="!newPostForm.valid" style="background-color: #EC407A;"
+                        (click)="addNewPost()"><span class="icon-cloud-upload" style="font-size: x-large;color: #7B1FA2;vertical-align: middle;"></span>&nbsp;Đăng bài</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 card mt-3">
+                <app-product-list [numProductOnRow]="'col-6'" [rows]="8" [isPaging]="false"></app-product-list>
+            </div>
+            <div *ngIf="isBusy" class="screen-center">
+                <app-spinner></app-spinner>
+            </div>
+        </div>
+    </div>
+</div>

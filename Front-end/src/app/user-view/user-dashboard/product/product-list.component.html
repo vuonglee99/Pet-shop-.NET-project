@@ -1,0 +1,42 @@
+<div class="row mr-2">
+    <div *ngFor="let product of productsOfPage" [ngClass]="numProductOnRow">
+        <div class="row productView mt-3">
+            <div class="col-12 text-center" style="height: 200px;">
+                <img src="{{product.imageURL}}" width="100%" alt="{{product.name}}" class="zoom-image"
+                    pTooltip="Click để xem chi tiết" tooltipPosition="right"
+                    (click)="redirectTo('/home/product/detail/',product.id)">
+            </div>
+            <div class="col-12 mt-2" style="font-size: 13px; height: 50px;">
+                {{product.name}}
+            </div>
+            <div class="col-12 mt-2 text-center">
+                <p-rating [ngModel]="product.star" readonly="true" stars="5" [cancel]="false"></p-rating>
+            </div>
+            <div class="col-12 text-center title-font text-center">
+                {{product.price}}đ
+            </div>
+            <div class="col-12 text-center mt-2">
+                <button type="button" class=" btn  rounded-pill w-100 " style="background-color: #EC407A;"
+                    [disabled]="product.stock <=0" (click)="addToCart(product.id)"><span class="icon-shopping-cart-3" style="font-size: x-large;">
+                        <span class="path1"></span><span class="path2"></span><span class="path3"></span><span
+                            class="path4"></span><span class="path5"></span><span class="path6"></span><span
+                            class="path7"></span><span class="path8"></span><span class="path9"></span><span
+                            class="path10"></span><span class="path11"></span><span class="path12"></span><span
+                            class="path13"></span><span class="path14"></span><span class="path15"></span><span
+                            class="path16"></span><span class="path17"></span><span class="path18"></span><span
+                            class="path19"></span></span>
+                    <span *ngIf="product.stock<=0">Hết hàng</span><span *ngIf="product.stock>0">Thêm</span> </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 mt-3 text-center" *ngIf="isEmpty">
+        <span>
+            <img src="assets/sad_pet.png" width="10%">
+            <h5 class="mt-3">Không tìm thấy bất kì sản phẩm nào!</h5>
+        </span>
+
+    </div>
+    <div class="col-12 text-right" *ngIf="isPaging">
+        <p-paginator [totalRecords]="totalProduct" (onPageChange)="paginate($event)" [rows]="rows"></p-paginator>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<div class="animated fadeIn mb-5">
+    <div [ngClass]="{'disable': isBusy}">
+
+        <div class="toolbar">
+            <ul class="text-dark" style="font-family: auto;font-size: 18px;padding-left:10px;margin:0;">
+                <li class="menu-toolbar" style="display: inline-block;padding:15px;padding-left: 20px;cursor: pointer;"
+                    (click)="confirm()">
+                    <i class="pi pi-save" style="vertical-align: bottom;"></i> Lưu</li>
+                <li class="menu-toolbar" style="display: inline-block;padding:15px;padding-left: 20px;cursor: pointer;"
+                    (click)="refresh()">
+                    <i class="fa fa-refresh"></i> Làm mới</li>
+            </ul>
+        </div>
+
+        <div class="mt-3 row">
+            <div class="col-md-6">
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="imageURL"><strong>Ảnh bài đăng(*)</strong></label>
+                        <p-fileUpload name="imageURL" (onSelect)="onFileSelected($event)" multiple="false"
+                            accept="image/*" maxFileSize="5000000" fileLimit="1" >
+                            <ng-template pTemplate="content">
+                            </ng-template>
+                        </p-fileUpload>
+                    </div>
+                </div>
+
+            </div>
+            <form class="col-md-6" [formGroup]="newsForm">
+                <div class="row">
+                    <div class=" form-group col-md-12 ">
+                        <label for="tittle"><strong>Tiêu đề<span style="color: red;">(*)</span></strong></label>
+                        <textarea rows="3" id="tittle" class="form-control" name=" tittle"
+                            [(ngModel)]="newsInput.tittle" formControlName="tittle" required></textarea>
+                    </div>
+                    <div class=" form-group col-md-12 "
+                        *ngIf="newsForm.controls['tittle'].errors && newsForm.controls['tittle'].dirty">
+                        <p-message severity="error" text="Không được bỏ trống tiêu đề."
+                            *ngIf="newsForm.controls['tittle'].errors['required']"></p-message>
+                        <p-message severity="error" text="Yêu cầu tối thiểu 10 kí tự."
+                            *ngIf="newsForm.controls['tittle'].errors['minlength']"></p-message>
+                    </div>
+                </div>
+            </form>
+
+
+            <form class="col-md-12 mt-3" [formGroup]="newsForm">
+                <div class="row">
+                    <label for="stock" class="col-md-12"><strong>Thông tin chi tiết<span
+                                style="color: red;">(*)</span></strong></label>
+                    <div class="col-md-12">
+                        <p-editor [(ngModel)]="newsInput.content" [style]="{'height':'800px'}" class="col-md-12"
+                            name="content" formControlName="content"  (onInit)="editorInit($event)"required>
+                        </p-editor>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+   
+
+    <p-confirmDialog #cd header="Thông báo xác nhận" icon="pi pi-exclamation-triangle" [style]="{width: '45vw'}">
+        <p-footer>
+            <button type="button" pButton icon=" fa fa-check" label="Xác nhận" (click)="cd.accept()"></button>
+            <button type="button" pButton icon="fa fa-times" label="Hủy bỏ" (click)="cd.reject()"
+                style="background-color:#6c757d;border-color: #6c757d;"></button>
+        </p-footer>
+    </p-confirmDialog>
+
+    <p-dialog header="Lỗi" [(visible)]="displayModal" [modal]="true" [style]="{width: '35vw'}" [baseZIndex]="10000"
+        [draggable]="false" [resizable]="false">
+        <div class="mt-3">
+            <strong>Bạn cần phải hoàn thành hết các trường dữ liệu!</strong>
+        </div>
+        <p-footer>
+            <button style="background-color: #d39e00;border-color: #c69500;" type="button" pButton icon="pi pi-check"
+                (click)="displayModal=false" label="OK"></button>
+        </p-footer>
+    </p-dialog>
+    <div *ngIf="isBusy">
+        <app-spinner></app-spinner>
+    </div>
+</div>

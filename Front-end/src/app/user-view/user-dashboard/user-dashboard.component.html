@@ -1,0 +1,81 @@
+<div class="animated fadeIn ml-2 mr-2" style="margin-bottom: 150%;">
+
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;left:50px;position: relative;">
+        <app-top-menu></app-top-menu>
+        <div class="row" style="position: absolute;">
+            <div class="col-12">
+                <img src="assets/img/anh-nen.png" width="110%" style="margin-left: -6em ;">
+            </div>
+            <div class="col-12 text-left" >
+                <div class="row">
+                    <div class="col-9 text-left" style="margin-left: -5em;">
+                        <ng-image-slider [images]="imageObject" [infinite]="true" [autoSlide]="4" [imageSize]="{'width':'900px','height':'389px'}" #nav>
+                        </ng-image-slider>
+                    </div>
+                    <div class="col-3 text-left" style="margin-left:1.75em">
+                        <img src="https://firebasestorage.googleapis.com/v0/b/petsshop-25bdd.appspot.com/o/products%2Fquang_cao1.png?alt=media&token=bc9d994b-2f61-4a90-b26b-0af108ebecf5"
+                        width="268" height="198">
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-5">
+                <div class="row">
+                    <div class="col-12 text-center title-box-new ">
+                        <span class="title-new">TOP SẢN PHẨM BÁN CHẠY</span>
+                    </div>
+                    <hr>
+                    <div class="col-12 text-center">
+                        <app-product-list [categoryId]="categoryId" [viewCount]="20" [numProductOnRow]="'col-2'" [rows]="6" >
+                        </app-product-list>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 mt-5">
+                <div class="row">
+                    <div class="col-12 text-center title-box-new ">
+                        <span class="title-new">DANH MỤC NỔI BẬT</span>
+                    </div>
+                    <hr>
+                    <div class="col-12 text-center">
+                        <app-product-list  [star]="star" [numProductOnRow]="'col-2'" [sortBy]="'star'" [rows]="6"></app-product-list>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 text-center mt-5 " *ngFor="let rootCate of rootCateList;let i=index">
+                <div class="row">
+                    <div class="col-2 text-left">
+                        <div class="row align-items-center" style="background-color: #EEEEEE;">
+                            <div class="col-12">
+                                <div class="row item">
+                                    <div class="menu-topbar col-12 text-center mb-2"
+                                        style="background-color: #D81B60;color: white;">
+                                        SHOP CHO {{rootCate.name}}
+                                    </div>
+
+                                    <ul *ngFor="let cate of cateList[i]" class="col-12" style="list-style: none;">
+                                        <li>
+                                            <a (click)="redirectTo('/home/product/',cate.id)">{{cate.name}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-10" style="border-top: 1px solid grey;" *ngIf="cateList[i]">
+                        <app-product-list [categoryId]="cateList[i][0].id" [star]="-1" [numProductOnRow]="'col-2'" [isPaging]="false" [rows]="6">
+                        </app-product-list>
+                    </div>
+                </div>
+                <div class="col-12 text-center mt-5">
+                    Ảnh quảng cáo
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="isBusy" class="screen-center">
+            <app-spinner></app-spinner>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="animated fadeIn" [ngClass]="{'disable': isBusy}">
+
+  <div class="row align-items-center " style="background-color:  #EEEEEE;">
+    <div class="col-md-6">
+      <div class="col-12 text-center">
+        <h5>ĐĂNG NHẬP TÀI KHOẢN</h5>
+      </div>
+
+      <form [formGroup]="loginForm" class="row " style="justify-content: center;height: 100%;">
+        <div class="form-group col-8">
+          <label for="USERNAME"><strong>Tên đăng nhập<span class="text-danger">(*)</span></strong></label>
+          <input type="text" class="form-control rounded-pill " id="USERNAME" style="height: 50px;"
+            formControlName="USERNAME" [(ngModel)]="userLogin.username" required>
+        </div>
+        <div class="form-group col-8 ">
+          <label for="PASSWORD"><strong>Mật khẩu<span class="text-danger">(*)</span></strong></label>
+          <input type="password" class="form-control rounded-pill " id="PASSWORD" style="height: 50px;"
+            formControlName="PASSWORD" [(ngModel)]="userLogin.password" required>
+        </div>
+
+        <div class="col-12 text-center">
+          <button type="button" class="btn btn-primary rounded-pill" style="height: 50px;width: 150px;"
+            [disabled]="!loginForm.valid" (click)="login()">Đăng nhập</button>
+        </div>
+        <div class="col-12 text-center mt-3">
+          <span class="text-muted">Bạn chưa có tài khoản?</span>
+          <a [routerLink]="['/register']">Đăng kí tài khoản</a>
+        </div>
+        <!-- <div class="col-4"> 
+            <button type="button" class="btn btn-primary">Đăng kí</button>
+          </div> -->
+      </form>
+
+
+    </div>
+    <div class="col-md-6 ">
+      <img src="assets/img/avatar.webp" width="100%">
+    </div>
+  </div>
+  <div *ngIf="isBusy">
+    <app-spinner></app-spinner>
+  </div>
+</div>

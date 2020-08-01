@@ -1,0 +1,146 @@
+<div class="animated fadeIn" style="margin-bottom: 80%;">
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;left:50px;position: relative;">
+        <app-top-menu></app-top-menu>
+        <div class="row mt-5" style="position: absolute;padding-right: 3.5em;">
+            <div class="row mt-3">
+                <div class="col-md-12" *ngIf="currentOrder">
+                    <div class="row ">
+                        <div class="col-md-4">
+                            <strong>THÔNG TIN NGƯỜI NHẬN</strong>
+                            <div class="card panel" style="padding: 1em;height: 180px;border: 2px solid #E91E63;">
+                                Người nhận: {{currentOrder.shipName}}<br>
+                                Địa chỉ: {{currentOrder.shipAddress}}<br>
+                                Điện thoại:{{currentOrder.shipPhoneNumber}}<br>
+                                Email: {{currentOrder.shipEmail}}<br>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <strong>HÌNH THỨC GIAO HÀNG</strong>
+                            <div class="card panel" style="padding: 1em;height: 180px;border: 2px solid #D500F9;">
+                                Giao hàng tiêu chuẩn 3-5 ngày sau khi đặt hàng.<br>
+                                Phí vận chuyển 20.000đ<br>
+                                Thanh toán khi nhận hàng.<br>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 wow bounce">
+                            <strong>THÔNG TIN ĐƠN HÀNG</strong>
+                            <div class="card panel" style="padding: 1em;height: 180px;border: 2px solid #FF1744;">
+                                Tổng cộng: sản phẩm.<br>
+                                Trị giá đơn hàng: {{currentOrder.total}}đ<br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mt-5 mb-2"><strong>TRẠNG THÁI ĐƠN HÀNG</strong></p>
+                <div class="card col-md-12">
+                    <div class="row" >
+                        <div class="col-md-12 mt-3 ">
+                        <p-progressBar [value]="orderProcessing" [showValue]="false" [style]="{'height': '10px'}" [ngClass]="'progress-fix'">
+                        </p-progressBar>
+                        </div>
+                        <div class="col-12 mt-2 title-font" *ngIf="currentOrder">
+                            {{currentOrder.status}}
+                        </div>
+                    </div>
+                </div>
+
+                <p class="mt-5 mb-2"><strong>THÔNG TIN SẢN PHẨM</strong></p>
+                <div class="col-md-12 card ml-1 mr-1">
+                    <div class="row mt-4 mb-2">
+                        <div class="col-md-2">
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <strong>Tên sản phẩm</strong>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <strong>Số lượng</strong>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <strong>Giá</strong>
+                        </div>
+                        <div class="col-md-2 text-center">
+                            <strong>Tổng cộng</strong>
+                        </div>
+                    </div>
+                    <hr>
+                    <div *ngFor="let orderDetail of orderProductList">
+                        <div class="row mt-2 align-items-center">
+                            <div class="col-md-2">
+                                <img src="{{orderDetail.imageURL}}" alt="Ảnh-của-sản-phẩm" width="60%" class="zoom-image"
+                                (click)="redirectTo('/home/product/detail/',orderDetail.productId)">
+                            </div>
+                            <div class="col-md-4 text-center routerLink" (click)="redirectTo('/home/product/detail/',orderDetail.productId)">
+                                {{orderDetail.productName}}
+                            </div>
+                            <div class="col-md-2 text-center">
+                                {{orderDetail.quantity}}
+                            </div>
+                            <div class="col-md-2 text-center title-font">
+                                {{orderDetail.productPrice}}đ
+                            </div>
+                            <div class="col-md-2 text-center title-font">
+                                {{orderDetail.sum}}đ
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+
+                    <div class="row" *ngIf="currentOrder">
+                        <div class="col-md-9"></div>
+                        <div class=" col-md-3 text-right"><span class="float-left"><strong>Tạm tính</strong></span>
+                            {{currentOrder.total}}đ
+                        </div>
+                       
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 text-right"><span class="float-left"><strong>Phí vận chuyển</strong></span>
+                            20000đ
+                        </div>
+                        <div class="col-md-9"></div>
+                        <div class="col-md-3 text-right "><span class="float-left text-dark"><strong>Tổng
+                                    cộng</strong></span>
+                            <span class="title-font">{{currentOrder.total}}đ</span>
+                        </div>
+                        <div class="col-12 text-right m-2">
+                            <button class="btn btn-danger " style="border-radius: 5px;" type="button" (click)="redirectTo('/home/order/','')">Quay lại danh sách</button>
+                            <button class="btn btn-warning ml-2 " style="border-radius: 5px;" type="button" (click)="displayModal=true" *ngIf="!isFinish">Hủy đơn hàng</button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <p-dialog header="Lý do hủy đơn hàng" [(visible)]="displayModal" [modal]="true" [style]="{width: '30vw'}"
+            [baseZIndex]="10000" [ngClass]="'fix-dialog'">
+            <form [formGroup]="notificationForm">
+                <div class="mt-3 ">
+                    <div class="">
+                        <h5>Lý do hủy đơn hàng</h5>
+                    </div>
+                    <div class="">
+                        <label for="tittle"><strong>Tiêu đề <span style="color: red;">(*)</span></strong></label>
+                        <textarea rows="1" id="tittle" class="form-control" name=" tittle"
+                            [(ngModel)]="notificationInput.tittle" formControlName="tittle" required></textarea>
+                    </div>
+    
+                    <div class="">
+                        <label for="tittle"><strong>Nội dung<span style="color: red;">(*)</span></strong></label>
+                        <textarea rows="2" id="message" class="form-control" name=" message"
+                            [(ngModel)]="notificationInput.message" formControlName="message" required></textarea>
+                    </div>
+                </div>
+            </form>
+            <p-footer>
+                <button  type="button" pButton icon="pi pi-check"
+                    (click)="addNotification()" label="Gửi" [disabled]="!notificationForm.valid" ></button>
+                <button type="button" pButton icon="fa fa-times"
+                    (click)="displayModal=false" label="Hủy" class="ui-button-secondary"></button>
+            </p-footer>
+        </p-dialog>
+            <div *ngIf="isBusy" class="screen-center">
+                <app-spinner></app-spinner>
+            </div>
+        </div>
+    </div>
+</div>

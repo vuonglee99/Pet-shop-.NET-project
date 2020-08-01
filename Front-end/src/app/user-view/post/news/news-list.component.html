@@ -1,0 +1,68 @@
+<div class="animated fadeIn">
+    <div [ngClass]="{'disable': isBusy}" style="height:100%;">
+        <div class="row mt-3">
+            <app-post-side-menu [active]="'Tin tức'"></app-post-side-menu>
+            <div class="col-6 ml-auto">
+                <div *ngFor="let news of newsOfPage;let i=index;" class="col-12">
+                    <div class="row mt-3 card p-3">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-2">
+                                    <img src="assets/img/user-icon.png" alt="Ảnh đại diện" width="100%"
+                                        style="border-radius: 50%;">
+                                </div>
+                                <div class="col-10 text-left">
+                                    <span style="font-size: larger;font-weight: 500;">Admin</span>
+                                    <p class="txt_pink">{{news.dateCreated}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-2">
+                            {{news.tittle}}
+                        </div>
+
+                        <div class="col-12 mt-3 ">
+                            <div class="hovereffect">
+                                <img src="{{news.imageURL}}" alt="Ảnh-bài-đăng" width="100%" class="image">
+                                <div class="overlay">
+                                    <h2>Hành động</h2>
+                                    <a class="info" (click)="redirectTo('/post/news/',news.id)"><span
+                                            class="icon-eye"></span>&nbsp;Xem chi tiết</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mt-2">
+                            <div class="row " style="border-top: 1px solid #E0E0E0;">
+                                <div class="col-3 text-center m-2 post-item ">
+                                    <i class="fa fa-heart-o" aria-hidden="true"
+                                        style="color: #EC407A;font-size: x-large;vertical-align: middle;">&nbsp;</i>Yêu
+                                    thích
+                                </div>
+                                <div class="col-3 text-center m-2 post-item " (click)="showComment(i)">
+                                    <span class="icon-bubbles4"
+                                        style="font-size: x-large;vertical-align: middle;"></span>&nbsp;Bình luận
+                                </div>
+
+                                <div class="col-12 form-group mt-2 pt-2" style="border-top:1px solid #E0E0E0;"
+                                    *ngIf="isShowComment&&((i-indexShow)==0)">
+                                    <input type="text" placeholder="Viết bình luận" class="form-control rounded-pill"
+                                        (keydown)="addComment($event)" [(ngModel)]="content">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 text-right" *ngIf="isPaging">
+                    <p-paginator [totalRecords]="totalNews" (onPageChange)="paginate($event)" [rows]="rows">
+                    </p-paginator>
+                </div>
+            </div>
+            <div class="col-3 card mt-3">
+                <app-product-list [numProductOnRow]="'col-6'" [rows]="8" [isPaging]="false"></app-product-list>
+            </div>
+            <div *ngIf="isBusy" class="screen-center">
+                <app-spinner></app-spinner>
+            </div>
+        </div>
+    </div>
+</div>
