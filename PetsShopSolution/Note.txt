@@ -1,0 +1,2 @@
+//18/5/2020. Ham AddProductToCategory dang bi loi 
+19/5/2020. Chua test promotion API
