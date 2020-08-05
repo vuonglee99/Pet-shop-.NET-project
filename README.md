@@ -24,5 +24,21 @@ Tên dự án: Pet shop online
     + Visual Studio 2019
     + SQL Server 2017
     
-3. Cài đặt & Sử dụng
-  - 
+3. Cài đặt & Sử dụng<br>
+ 3.1 Front-end:
+    - Chắc chắn máy bạn đã cài NodeJS, nếu chưa hãy tải [Tại đây](https://nodejs.org/en/download/) 
+    - Chạy các lệnh sau trên màn hình command:
+      1. npm install
+      2. npm build
+      3. ng serve
+    
+ 3.2 Back-end:
+   - Cài đặt .NET 3.1 [Tại đây](https://dotnet.microsoft.com/download)
+   - Setup Visual Studio
+     - Open the solution in VS 2017
+     - Open Package Manager Console and navigate to Scheduler.API by typing cd path_to_Scheduler.API
+     - Modify the connection string in appsettings.json to reflect your database environment
+     - Run the following commands:
+       + Add-Migration Initial
+       + Update-Database
+       + Build and run the Scheduler.API project
