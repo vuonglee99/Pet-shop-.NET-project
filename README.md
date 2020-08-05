@@ -30,9 +30,8 @@ Tên dự án: Pet shop online
     - Chạy các lệnh sau trên màn hình command:
       1. npm install
       2. npm build
-      3. ng serve
-    
- 3.2 Back-end:
+      3. ng serve<br>
+3.2 Back-end:
    - Cài đặt .NET 3.1 [Tại đây](https://dotnet.microsoft.com/download)
    - Setup Visual Studio
      - Open the solution in VS 2017
