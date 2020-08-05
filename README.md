@@ -24,15 +24,14 @@ Tên dự án: Pet shop online
     + Visual Studio 2019
     + SQL Server 2017
     
-3. Cài đặt & Sử dụng<br>
- 3.1 Front-end:
+3. Cài đặt & Sử dụng<br>A. Front-end:
     - Chắc chắn máy bạn đã cài NodeJS, nếu chưa hãy tải [Tại đây](https://nodejs.org/en/download/) 
     - Chạy các lệnh sau trên màn hình command:
       1. npm install
       2. npm build
       3. ng serve<br>
       
-3.2 Back-end:
+B. Back-end:
    - Cài đặt .NET 3.1 [Tại đây](https://dotnet.microsoft.com/download)
    - Setup Visual Studio
      - Open the solution in VS 2017
